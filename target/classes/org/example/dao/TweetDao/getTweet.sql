@@ -1,0 +1,1 @@
+select * from tweet where id=:id;

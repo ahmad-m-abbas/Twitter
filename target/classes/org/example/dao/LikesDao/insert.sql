@@ -1,0 +1,1 @@
+insert into likes values (:tweetId,:userId);

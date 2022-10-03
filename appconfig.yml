@@ -1,0 +1,4 @@
+---
+dbUrl: "jdbc:mariadb://localhost:3306/tweet"
+dbUser: "root"
+dbPassword: "root"

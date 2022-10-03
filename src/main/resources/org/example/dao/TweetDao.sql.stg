@@ -1,0 +1,13 @@
+group TweetDao;
+
+search(query) ::= <<
+select tweet.*
+from tweet t, user u
+where u.name=<name>
+<if(query.toBeIn)>
+ and t.text like "%<query.username>%"
+<endif>
+<if(query.orderBy)>
+        ORDER BY `<query.orderBy>`
+ <endif>
+>>

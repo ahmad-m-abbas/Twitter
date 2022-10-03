@@ -1,0 +1,8 @@
+CREATE TABLE `tweet`
+(
+    id SERIAL,
+    user_id BIGINT UNSIGNED NOT NULL,
+    `text` VARCHAR(280) NOT NULL,
+    created_on DATE NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES `user`(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
