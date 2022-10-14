@@ -1,0 +1,44 @@
+<html style="overflow: auto">
+<head>
+    <meta charset="utf8">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="/webjars/vuetify/2.6.6/dist/vuetify.css" rel="stylesheet" >
+    <script src="/webjars/vue/2.6.10/dist/vue.min.js"></script>
+    <script src="/webjars/vuetify/2.6.6/dist/vuetify.js"></script>
+    <script src="/webjars/chartjs/2.8.0/Chart.bundle.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    @componentRegistration
+</head>
+<body>
+<main id="main-vue" v-cloak>
+    @routeComponent
+</main>
+<script>
+    let vuetify = new Vuetify({
+        theme: {
+            themes: {
+                light: {
+                    primary: '#102338',
+                    secondary: '#F9A315',
+                    accent: '#D98912',
+                    info: '#367CA4',
+                    negative: '#F20C0C',
+                    success: '#4CAF50',
+                    blue: '#1976D2',
+                    'offer-new': '#F9A315',
+                    'offer-received': '#1976D2',
+                    'offer-accepted': '#4CAF50',
+                    'offer-rejected': '#FF5252',
+                    'offer-closed': '#e0e0e0',
+                }
+            }
+        }
+    })
+    var app = new Vue({
+        el: "#main-vue",
+        vuetify
+    });
+</script>
+</body>
+</html>

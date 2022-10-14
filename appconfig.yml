@@ -2,3 +2,9 @@
 dbUrl: "jdbc:mariadb://localhost:3306/tweet"
 dbUser: "root"
 dbPassword: "root"
+
+auth0Domain: "dev-onqrbo54.us.auth0.com"
+auth0ClientId: "c8YoMdBhfiemoZJIsvME6GPvh7UFk4bX"
+auth0ClientSecret: "JO0cJhrTFYdJgqEQ3HhNaUURO7nb-EaDtkgeU8MmK2yemcXAgqH7ckVU1NhYGScx"
+requiredScope: "openid email profile groups"
+portalUrl: "http://localhost:8081"

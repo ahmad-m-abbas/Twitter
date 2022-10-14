@@ -20,7 +20,12 @@ public class Configuration {
     private String dbUrl;
     private String dbUser;
     private String dbPassword;
-    private List<String> acceptedTokens;
+
+    private String auth0ClientId;
+    private String auth0ClientSecret;
+    private String auth0Domain;
+    private String requiredScope;
+
 
     public static Configuration instance() {
         if (instance == null) {

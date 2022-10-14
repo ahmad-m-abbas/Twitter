@@ -1,6 +1,8 @@
 package org.example;
 
 import io.javalin.apibuilder.EndpointGroup;
+import io.javalin.plugin.rendering.vue.VueComponent;
+import org.example.controller.FriendsController;
 import org.example.controller.LikesController;
 import org.example.controller.TweetController;
 import org.example.controller.UserController;
@@ -11,9 +13,10 @@ public class Routes implements EndpointGroup {
     @Override
     public void addEndpoints() {
         path("/",()->{
+            get(new VueComponent("home", null, new Include()));
+            path("home", () -> get(new VueComponent("home")));
+
         });
-
-
         path("api/user", () -> {
             get("", UserController::listUsers);
             get("{userId}", UserController::getUserById);
@@ -29,6 +32,13 @@ public class Routes implements EndpointGroup {
             post( TweetController::addTweet);
             post("/like", LikesController::add);
             put("{tweetId}", TweetController::updateTweet);
+        });
+
+        path("api/friends",()->{
+            get("{userId}/tweets", FriendsController::getFriendsTweets);
+            get("{userId}", FriendsController::getFriends);
+            post("", FriendsController::add);
+
         });
     }
 }

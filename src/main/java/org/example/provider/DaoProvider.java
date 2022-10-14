@@ -1,5 +1,6 @@
 package org.example.provider;
 
+import org.example.dao.FriendsDao;
 import org.example.dao.LikesDao;
 import org.example.dao.TweetDao;
 import org.example.dao.UserDao;
@@ -45,6 +46,17 @@ public class DaoProvider {
     public <T> T withTweetDao(Function<TweetDao, T> function) {
         return JdbiProvider.instance().jdbi().withExtension(TweetDao.class, (tweetDao) -> {
             return function.apply(tweetDao);
+        });
+    }
+
+    public void useFriendsDao(Consumer<FriendsDao> consumer) {
+        JdbiProvider.instance().jdbi().useExtension(FriendsDao.class, (friendsDao) -> {
+            consumer.accept(friendsDao);
+        });
+    }
+    public <T> T withFriendsDao(Function<FriendsDao, T> function) {
+        return JdbiProvider.instance().jdbi().withExtension(FriendsDao.class, (friendsDao) -> {
+            return function.apply(friendsDao);
         });
     }
     public void useLikesDao(Consumer<LikesDao> consumer) {
