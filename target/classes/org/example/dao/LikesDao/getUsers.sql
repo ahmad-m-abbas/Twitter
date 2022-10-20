@@ -1,3 +1,3 @@
-select u.*
-from tweet t, `user` u, likes l
-where t.id=:tweetId and t.id=l.tweet_Id and u.id=l.user_Id
+SELECT u.*
+FROM tweet t, `user` u, likes l
+WHERE t.id=:tweetId AND t.id=l.tweet_Id AND u.id=l.user_Id

@@ -1,1 +1,1 @@
-insert into likes values (:tweetId,:userId);
+INSERT INTO likes VALUES (:tweetId,:userId);
