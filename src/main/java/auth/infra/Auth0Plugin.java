@@ -97,7 +97,6 @@ public class Auth0Plugin implements Plugin {
         try {
             Tokens tokens = auth0Handler.handle(ctx);
             Claims jwsClaims = parseClaimsJws(tokens.getIdToken()).getBody();
-            System.out.println(jwsClaims);
             auth0Callback.accept(tokens, jwsClaims);
             ctx.sessionAttribute("accessToken", tokens.getAccessToken());
             ctx.sessionAttribute("idToken", tokens.getIdToken());
