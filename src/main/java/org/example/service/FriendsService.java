@@ -1,5 +1,6 @@
 package org.example.service;
 
+import exceptions.UserNotFoundException;
 import org.example.dao.query.SearchFriendQuery;
 import org.example.dto.FriendsDto;
 import org.example.dto.TweetDto;
@@ -16,8 +17,8 @@ public class FriendsService {
     private static FriendsService instance = null;
     private final FriendsRepository friendsRepository;
 
-    private FriendsService(){
-        friendsRepository=FriendsRepository.instance();
+    private FriendsService() {
+        friendsRepository = FriendsRepository.instance();
     }
 
     public static FriendsService instance() {
@@ -27,21 +28,31 @@ public class FriendsService {
         return instance;
     }
 
-    public List<TweetDto> getFriendsTweets(String userId){
+    public List<TweetDto> getFriendsTweets(String userId) {
         return friendsRepository.getFriendsTweets(userId);
     }
 
-    public List<UserDto> getFriends(String userId){
+    public List<UserDto> getFriends(String userId) {
         return friendsRepository.getFriends(userId);
     }
-    public List<UserDto> search(String userId,SearchFriendQuery searchFriendQuery){
-        return friendsRepository.search(userId,searchFriendQuery);
+
+    public List<UserDto> search(String userId, SearchFriendQuery searchFriendQuery) {
+        return friendsRepository.search(userId, searchFriendQuery);
     }
 
-    public void addFriends(FriendsDto friendsDto){
+    public void addFriends(FriendsDto friendsDto) throws UserNotFoundException {
+        UserDto userDto1 = UserService.instance().findUser(friendsDto.getFirstUser());
+        UserDto userDto2 = UserService.instance().findUser(friendsDto.getSecondUser());
+        if (userDto1 == null) {
+            throw new UserNotFoundException(friendsDto.getFirstUser());
+        }
+        if (userDto2 == null) {
+            throw new UserNotFoundException(friendsDto.getSecondUser());
+        }
         friendsRepository.addFriends(friendsDto);
     }
-    public void delete(FriendsDto friendsDto){
+
+    public void delete(FriendsDto friendsDto) {
         friendsRepository.delete(friendsDto);
     }
 }

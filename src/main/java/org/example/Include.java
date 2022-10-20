@@ -1,7 +1,5 @@
 package org.example;
 
-
-
 import io.javalin.http.Context;
 import io.javalin.plugin.rendering.vue.VueRenderer;
 import lombok.NoArgsConstructor;

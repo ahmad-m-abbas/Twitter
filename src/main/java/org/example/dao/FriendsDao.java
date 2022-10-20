@@ -44,6 +44,5 @@ public interface FriendsDao {
     @UseStringTemplateSqlLocator
     @RegisterBeanMapper(UserDto.class)
     @AllowUnusedBindings
-    List<UserDto> search(@Define("userId") String userId,@Define("query") SearchFriendQuery query);
-
+    List<UserDto> search(@Define("userId") String userId, @Define("query") SearchFriendQuery query);
 }

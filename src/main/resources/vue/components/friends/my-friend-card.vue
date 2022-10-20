@@ -20,12 +20,12 @@
       </v-row>
       <v-row class="d-flex justify-start align-center my-2 ml-4 mr-3">
         <template>
-          <v-chip  v-if="email"
-                   class="body-2  mr-2 mb-1"
-                   color="blue"
-                   label
-                   small
-                   outlined>
+          <v-chip v-if="email"
+                  class="body-2  mr-2 mb-1"
+                  color="blue"
+                  label
+                  small
+                  outlined>
             {{ email }}
           </v-chip>
         </template>
@@ -38,22 +38,21 @@
 Vue.component("my-friend-card", {
   template: "#my-friend-card",
   props: {
-    id:{
+    id: {
       type: String,
-      required : true
+      required: true
     },
     name: {
       type: String,
       required: true
     },
-    email:{
-      type: String ,
+    email: {
+      type: String,
       required: true
     }
   },
-  data(){
-    return{
-    }
+  data() {
+    return {}
   }
 
 });

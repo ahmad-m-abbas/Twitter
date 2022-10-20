@@ -12,9 +12,10 @@ public class TweetController {
     private static final TweetService tweetService = TweetService.instance();
 
 
-    public static void list(Context ctx){
+    public static void list(Context ctx) {
         ctx.json(tweetService.list());
     }
+
     public static void getTweetById(Context ctx) {
         TweetDto tweetDto = tweetService.getTweet(ctx.pathParam("tweetId"));
         if (tweetDto == null) {
@@ -25,27 +26,37 @@ public class TweetController {
     }
 
     public static void addTweet(Context ctx) {
-        TweetDto tweet = ctx.bodyAsClass(TweetDto.class);
-        tweetService.insert(tweet);
+        try {
+            TweetDto tweet = ctx.bodyAsClass(TweetDto.class);
+            tweetService.insert(tweet);
+        } catch (Exception e) {
+            ctx.json(e).status(400);
+        }
     }
 
     public static void updateTweet(Context ctx) {
-        TweetDto tweet = ctx.bodyAsClass(TweetDto.class);
-        String tweetId = ctx.pathParam("tweetId");
-        tweetService.update(tweetId, tweet);
+        try {
+            TweetDto tweet = ctx.bodyAsClass(TweetDto.class);
+            tweetService.update(tweet);
+        } catch (Exception e) {
+            ctx.json(e).status(400);
+        }
     }
 
-    public static void deleteTweet(Context ctx){
-        tweetService.delete(ctx.pathParam("tweetId"));
+    public static void deleteTweet(Context ctx) {
+        try {
+            tweetService.delete(ctx.pathParam("tweetId"));
+        } catch (Exception e) {
+            ctx.json(e).status(400);
+        }
     }
-    public static void search(Context ctx){
+
+    public static void search(Context ctx) {
         SearchTweetQuery query = new SearchTweetQuery(
                 ctx.pathParam("name"),
-                ctx.queryParamAsClass("toBeIn",String.class).getOrDefault(null),
-                ctx.queryParamAsClass("orderBy",String.class).getOrDefault(null)
+                ctx.queryParamAsClass("toBeIn", String.class).getOrDefault(null),
+                ctx.queryParamAsClass("orderBy", String.class).getOrDefault(null)
         );
-        String name = ctx.pathParam("name");
-        System.out.println(name);
         ctx.json(tweetService.search(query));
     }
 }

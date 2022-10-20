@@ -1,5 +1,6 @@
 package org.example;
 
+import exceptions.UsedEmailException;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.plugin.json.JavalinJackson;
@@ -22,11 +23,12 @@ import static auth.infra.Auth0Plugin.useAuth0Plugin;
 import static java.rmi.server.LogStream.log;
 
 
-public class TwitterApp implements App{
+public class TwitterApp implements App {
     Javalin javalin;
     TwitterAccessManager instance = null;
-    public TwitterApp(){
-        instance=new TwitterAccessManager();
+
+    public TwitterApp() {
+        instance = new TwitterAccessManager();
     }
 
     @Override
@@ -35,7 +37,7 @@ public class TwitterApp implements App{
 
     }
 
-    public void JavalinConfig(int port){
+    public void JavalinConfig(int port) {
         this.javalin = Javalin.create(config -> {
 
             config.jsonMapper(new JavalinJackson());
@@ -71,7 +73,11 @@ public class TwitterApp implements App{
                     userDto.setEmail(jwsClaims.get("email", String.class));
                     userDto.setName(jwsClaims.get("name", String.class));
                     if (UserService.instance().findUser(jwsClaims.getSubject()) == null) {
-                        UserService.instance().addUser(userDto);
+                        try {
+                            UserService.instance().addUser(userDto);
+                        } catch (UsedEmailException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
 //                    UserService.instance().updateUser(jwsClaims.getSubject(), userDto);
                 });
@@ -94,9 +100,11 @@ public class TwitterApp implements App{
         setupJdbi();
         setupJavalinVue();
     }
+
     private void setupJdbi() {
         JdbiProvider.instance().init();
     }
+
     private void setupFlyway() {
         Flyway flyway = Flyway.configure().dataSource(
                 Configuration.instance().getDbUrl(),
@@ -106,6 +114,7 @@ public class TwitterApp implements App{
 
         flyway.migrate();
     }
+
     @Override
     public void start() {
         javalin.start();

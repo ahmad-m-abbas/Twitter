@@ -1,1 +1,1 @@
-delete from likes l where l.tweet_id=:tweetId and l.user_id=:userID;
+DELETE FROM likes WHERE tweet_id=:tweetId AND user_id=:userId;

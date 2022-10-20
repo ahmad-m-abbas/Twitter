@@ -15,7 +15,7 @@
         label="Search for a user..."
         solo
     >
-      <template >
+      <template>
         <v-list-item>
           <v-list-item-title>
             Search for users
@@ -43,12 +43,10 @@
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title v-text="item.name"></v-list-item-title>
-<!--          <v-btn-->
-<!--          @click="$emit('add',item.id)"-->
-<!--          >Add Friend</v-btn>-->
           <v-btn
-          @click="$emit('view',item.id)"
-          >View profile</v-btn>
+              @click="$emit('view',item.id)"
+          >View profile
+          </v-btn>
         </v-list-item-content>
         <v-list-item-action>
           <v-icon>mdi-coin</v-icon>
@@ -88,13 +86,10 @@ Vue.component("search-bar", {
           .finally(() => (this.isLoading = false))
     },
   },
-  methods:{
-
-  }
 });
 </script>
 <style>
-#search-bar{
+#search-bar {
   height: 10px;
 }
 </style>

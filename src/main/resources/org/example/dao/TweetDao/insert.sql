@@ -1,2 +1,2 @@
-INSERT INTO `tweet` (id,user_id,text,created_on)
-values(:id,:userId,:text,:created_on)
+INSERT INTO `tweet` (user_id,text,created_on)
+values(:userId,:text,:created_on)

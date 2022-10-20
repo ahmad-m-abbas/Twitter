@@ -27,6 +27,7 @@ public class DaoProvider {
     public static final DaoProvider daos() {
         return instance();
     }
+
     public void useUserDao(Consumer<UserDao> consumer) {
         JdbiProvider.instance().jdbi().useExtension(UserDao.class, (userDao) -> {
             consumer.accept(userDao);
@@ -38,11 +39,13 @@ public class DaoProvider {
             return function.apply(userDao);
         });
     }
+
     public void useTweetDao(Consumer<TweetDao> consumer) {
         JdbiProvider.instance().jdbi().useExtension(TweetDao.class, (tweetDao) -> {
             consumer.accept(tweetDao);
         });
     }
+
     public <T> T withTweetDao(Function<TweetDao, T> function) {
         return JdbiProvider.instance().jdbi().withExtension(TweetDao.class, (tweetDao) -> {
             return function.apply(tweetDao);
@@ -54,16 +57,19 @@ public class DaoProvider {
             consumer.accept(friendsDao);
         });
     }
+
     public <T> T withFriendsDao(Function<FriendsDao, T> function) {
         return JdbiProvider.instance().jdbi().withExtension(FriendsDao.class, (friendsDao) -> {
             return function.apply(friendsDao);
         });
     }
+
     public void useLikesDao(Consumer<LikesDao> consumer) {
         JdbiProvider.instance().jdbi().useExtension(LikesDao.class, (likesDao) -> {
             consumer.accept(likesDao);
         });
     }
+
     public <T> T withLikesDao(Function<LikesDao, T> function) {
         return JdbiProvider.instance().jdbi().withExtension(LikesDao.class, (likesDao) -> {
             return function.apply(likesDao);

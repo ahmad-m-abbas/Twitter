@@ -124,7 +124,8 @@ Vue.component("user-friends", {
           "secondUser": this.id
         })
       }).then(
-          this.MyFriends.refresh()
+          this.ClearFields()
+          // this.MyFriends.refresh()
     );
     }
   }

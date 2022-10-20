@@ -1,1 +1,1 @@
-select * from tweet;
+SELECT * FROM tweet;

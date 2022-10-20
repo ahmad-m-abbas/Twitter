@@ -34,7 +34,7 @@ public interface TweetDao {
 
     @SqlUpdate
     @UseClasspathSqlLocator
-    void update(@Bind("id") String id, @BindBean("tweet") TweetDto tweetDto);
+    void update(@BindBean("tweet") TweetDto tweetDto);
 
     @SqlUpdate
     @UseClasspathSqlLocator

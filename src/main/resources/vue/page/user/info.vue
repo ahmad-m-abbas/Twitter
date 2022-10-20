@@ -17,7 +17,8 @@
                   label="User Name"
                   :rules="validationRules.nameRules"
                   required
-                  outlined v-model="userItem.name">
+                  outlined
+                  v-model="userItem.name">
               </v-text-field>
 
               <v-text-field
@@ -26,7 +27,8 @@
                   label="Email"
                   :rules="validationRules.emailRules"
                   required
-                  outlined v-model="userItem.email">
+                  outlined
+                  v-model="userItem.email">
               </v-text-field>
             </v-row>
           </div>
@@ -43,6 +45,23 @@
                 @click="UpdateUser"
                 large>
               SAVE
+            </v-btn>
+          </v-row>
+          <v-row
+          v-else
+          dense
+          mx-auto
+          align="center"
+          class="border-save-btn"
+          >
+            <v-btn
+                v-if="!friends.some(f => f.id===this.$javalin.state.userDetails.user_id)"
+                outlined
+                class="save-btn"
+                color="primary"
+                @click="add(id)"
+                large>
+                ADD
             </v-btn>
           </v-row>
         </v-form>
@@ -89,6 +108,18 @@ Vue.component("user-info", {
     save() {
         this.UpdateUser();
 
+    },
+    add(id){
+
+      fetch(`/api/friends/`, {
+        method: "post", 'Content-Type': 'application/json',
+        body: JSON.stringify({
+          "firstUser": id,
+          "secondUser": this.$javalin.state.userDetails.user_id
+        })
+      }).then(
+      this.friends.refresh()
+      );
     },
     UpdateUser() {
       fetch(`/api/user/${this.$javalin.state.userDetails.user_id}`, {

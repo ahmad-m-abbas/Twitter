@@ -1,3 +1,3 @@
 UPDATE `tweet`
 SET text = :tweet.text
-WHERE id = :id
+WHERE id = :tweet.id

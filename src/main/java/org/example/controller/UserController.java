@@ -9,8 +9,9 @@ public class UserController {
     private static final UserService userService = UserService.instance();
 
     public static void listUsers(Context ctx) {
-        ctx.json(userService.listUsers(ctx.queryParamAsClass("name",String.class).getOrDefault("")));
+        ctx.json(userService.listUsers(ctx.queryParamAsClass("name", String.class).getOrDefault("")));
     }
+
     public static void getUserById(Context ctx) {
         UserDto userDto = userService.findUser(ctx.pathParam("userId"));
         if (userDto == null) {
@@ -21,18 +22,25 @@ public class UserController {
     }
 
     public static void addUser(Context ctx) {
-        UserDto user = ctx.bodyAsClass(UserDto.class);
-        userService.addUser(user);
+        try {
+            UserDto user = ctx.bodyAsClass(UserDto.class);
+            userService.addUser(user);
+        } catch (Exception e) {
+            ctx.json(e).status(400);
+        }
     }
 
     public static void updateUser(Context ctx) {
-        UserDto userDto = ctx.bodyAsClass(UserDto.class);
-        String userId = ctx.pathParam("userId");
-        userService.updateUser(userId, userDto);
+        try {
+            UserDto userDto = ctx.bodyAsClass(UserDto.class);
+            String userId = ctx.pathParam("userId");
+            userService.updateUser(userId, userDto);
+        } catch (Exception e) {
+            ctx.json(e).status(400);
+        }
     }
 
-    public static void getUserTweets(Context ctx){
-        System.out.println(userService.getUserTweets(ctx.pathParam("userId")));
+    public static void getUserTweets(Context ctx) {
         ctx.json(userService.getUserTweets(ctx.pathParam("userId")));
     }
 }

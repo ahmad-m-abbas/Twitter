@@ -1,4 +1,4 @@
-<template id="app-layout" >
+<template id="app-layout">
   <v-app>
     <topbar @change="change()" :name="name">
       <template v-slot:appbar-extension>
@@ -27,7 +27,7 @@
                 v-ripple="false"
                 class="white--text user-menu-button"
             >
-              {{user.data.name}}
+              {{ user.data.name }}
               <v-icon color="white">mdi-chevron-down</v-icon>
             </v-btn>
           </template>
@@ -49,7 +49,8 @@
                 <v-list-item-content>
 
                   <v-list-item-title class="white--text">
-                    <a :href=`/users/${$javalin.state.userDetails.user_id}/profile` class="white--text text-decoration-none">Profile</a>
+                    <a :href=`/users/${$javalin.state.userDetails.user_id}/profile`
+                       class="white--text text-decoration-none">Profile</a>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list>
@@ -65,7 +66,6 @@
               </v-list-item-content>
             </v-list-item>
           </v-list>
-
         </v-menu>
       </v-col>
       <v-col cols="1" sm="4" align-self="center" class="mr-12 d-flex justify-around">
@@ -83,20 +83,20 @@
           </v-tab>
         </v-tabs>
       </v-col>
-      <v-col  cols="1" sm="3"  class="ml-12 d-flex justify-end" style="height: 100%;">
-          <search-bar
-          @add="add"
-          @view="view"
-          >
-          </search-bar>
+      <v-col cols="1" sm="3" class="ml-12 d-flex justify-end" style="height: 100%;">
+        <search-bar
+            @add="add"
+            @view="view"
+        >
+        </search-bar>
       </v-col>
     </v-row>
     <v-row class="d-flex justify-center">
-      <h1 class="main-title" >Twitter</h1>
+      <h1 class="main-title">Twitter</h1>
     </v-row>
-    <v-main width="900px" >
-      <div  class="d-flex justify-center align-baseline fill-height">
-        <slot ></slot>
+    <v-main width="900px">
+      <div class="d-flex justify-center align-baseline fill-height">
+        <slot></slot>
       </div>
     </v-main>
   </v-app>
@@ -125,10 +125,10 @@ Vue.component("app-layout", {
     change: function () {
       this.drawer = !this.drawer
     },
-    view(id){
-      window.location=`/users/${id}/profile`;
+    view(id) {
+      window.location = `/users/${id}/profile`;
     },
-    add(id){
+    add(id) {
 
       fetch(`/api/friends/`, {
         method: "post", 'Content-Type': 'application/json',
@@ -161,7 +161,8 @@ Vue.component("app-layout", {
 .v-tab {
   text-transform: none !important;
 }
-*p{
+
+* p {
   color: black;
 }
 </style>

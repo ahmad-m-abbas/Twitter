@@ -26,12 +26,13 @@
         <v-row dense v-if=" tweets.loaded">
 
           <v-col cols="12" md="6" lg="4" >
-
             <tweet-post v-for="tweet in tweets.data" class=""
                         :id="tweet.hasOwnProperty('id') ? tweet.id : ''"
                         :name="new LoadableData(`/api/user/`+tweet.userId).data.name"
+                        :user="tweet.hasOwnProperty('userId') ? tweet.userId : 'a'"
                         :text="tweet.hasOwnProperty('text') ? tweet.text : ''"
                         :date="tweet.hasOwnProperty('created_on') ? new Date(tweet.created_on) : ''"
+                        :like="likedTweets.some(a=>tweet.id==a.id)"
             >
             </tweet-post>
           </v-col>
@@ -78,6 +79,7 @@ Vue.component("user-tweets", {
   created() {
     this.id= this.$javalin.pathParams["userId"];
     this.tweets = new LoadableData(`/api/user/${this.id}/tweets`);
+    this.likedTweets=new LoadableData(`/api/user/${this.$javalin.state.userDetails.user_id}/likes`).data;
 
   }, methods: {
     forceRerender() {

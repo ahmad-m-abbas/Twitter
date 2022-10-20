@@ -11,10 +11,9 @@ import static org.example.provider.DaoProvider.daos;
 public class LikesRepository {
     private static LikesRepository likesRepository = null;
 
-    public LikesRepository(){
+    public LikesRepository() {
 
     }
-
 
     public static LikesRepository instance() {
         if (likesRepository == null) {
@@ -22,17 +21,20 @@ public class LikesRepository {
         }
         return likesRepository;
     }
-    public List<UserDto> getUsers(String tweetId){
+
+    public List<UserDto> getUsers(String tweetId) {
         return daos().withLikesDao(likesDao -> likesDao.getUsers(tweetId));
     }
-    public List<TweetDto> getTweets(String userId){
+
+    public List<TweetDto> getTweets(String userId) {
         return daos().withLikesDao(likesDao -> likesDao.getTweets(userId));
     }
 
-    public void addLike(LikesDto likesDto){
+    public void addLike(LikesDto likesDto) {
         daos().useLikesDao(likesDao -> likesDao.insert(likesDto));
     }
-    public void unlike(LikesDto likesDto){
+
+    public void unlike(LikesDto likesDto) {
         daos().useLikesDao(likesDao -> likesDao.unlike(likesDto));
     }
 }

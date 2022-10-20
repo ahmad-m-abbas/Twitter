@@ -1,4 +1,5 @@
 package auth.infra;
+
 import com.auth0.AuthenticationController;
 import com.auth0.IdentityVerificationException;
 import com.auth0.Tokens;
@@ -14,10 +15,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
-import org.example.Configuration;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 

@@ -27,6 +27,7 @@ public interface LikesDao {
     @SqlUpdate
     @UseClasspathSqlLocator
     void insert(@BindBean LikesDto likesDto);
+
     @SqlUpdate
     @UseClasspathSqlLocator
     void unlike(@BindBean LikesDto likesDto);

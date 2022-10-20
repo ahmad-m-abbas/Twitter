@@ -1,19 +1,30 @@
 <template id="home">
   <app-layout >
-
     <v-container absolute  class="main-content" color="#87CEFA" opacity="0.5" >
+      <h2>Hi <strong>{{new LoadableData(`/api/user/`+this.$javalin.state.userDetails.user_id).data.name}}</strong></h2>
+      <h3>Share your thoughts here</h3>
+      <v-textarea
+          solo
+          name="input-7-4"
+          label="Post here..."
+          v-model="text"
+
+      ></v-textarea>
+      <v-btn
+      @click="post()"
+      >
+        Post the blog
+      </v-btn>
       <v-container class="main-content-container" >
         <tweet-post v-for="tweet in tweets" class=""
         :id="tweet.hasOwnProperty('id') ? tweet.id : ''"
+        :user="tweet.hasOwnProperty('id') ? tweet.userId : ''"
         :name="new LoadableData(`/api/user/`+tweet.userId).data.name"
         :text="tweet.hasOwnProperty('text') ? tweet.text : ''"
         :date="tweet.hasOwnProperty('created_on') ? new Date(tweet.created_on) : ''"
-
+        :like="likedTweets.some(a=>tweet.id==a.id)"
         >
         </tweet-post>
-        <h1>
-          {{tweets}}
-        </h1>
       </v-container>
     </v-container>
   </app-layout>
@@ -23,6 +34,7 @@ Vue.component("home", {
   template: "#home",
   data() {
     return {
+      text:'',
       tweets: [],
       likedTweets:[]
     }
@@ -32,7 +44,18 @@ Vue.component("home", {
     this.likedTweets=new LoadableData(`/api/user/${this.$javalin.state.userDetails.user_id}/likes`).data;
   },
   methods:{
-
+    post(){
+      fetch(`/api/tweet/`, {
+        method: "post", 'Content-Type': 'application/json',
+        body: JSON.stringify({
+          "userId": this.$javalin.state.userDetails.user_id,
+          "text": this.text,
+          "created_on": Date.now()
+        })
+      }).then(() => {
+            this.text=''
+      });
+    }
   }
 });
 </script>
@@ -67,7 +90,7 @@ Vue.component("home", {
 }
 
 .main-content-container {
-  max-width: 40%;
+  max-width: 100%;
   max-height: 100%;
 
 }

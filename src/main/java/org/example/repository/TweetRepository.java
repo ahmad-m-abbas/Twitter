@@ -11,7 +11,7 @@ import static org.example.provider.DaoProvider.daos;
 public class TweetRepository {
     private static TweetRepository tweetRepository = null;
 
-    public TweetRepository(){
+    public TweetRepository() {
 
     }
 
@@ -22,26 +22,27 @@ public class TweetRepository {
         return tweetRepository;
     }
 
-    public List<TweetDto> list(){
+    public List<TweetDto> list() {
         return daos().withTweetDao(TweetDao::list);
     }
-    public TweetDto getTweet(String id){
+
+    public TweetDto getTweet(String id) {
         return daos().withTweetDao((tweetDao) -> tweetDao.getTweet(id));
     }
 
-    public void insert(TweetDto tweetDto){
+    public void insert(TweetDto tweetDto) {
         daos().useTweetDao((tweetDao -> tweetDao.insert(tweetDto)));
     }
 
-    public void delete(String id){
+    public void delete(String id) {
         daos().useTweetDao(tweetDao -> tweetDao.delete(id));
     }
 
-    public void update(String id, TweetDto tweetDto){
-        daos().useTweetDao(tweetDao -> tweetDao.update(id, tweetDto));
+    public void update(TweetDto tweetDto) {
+        daos().useTweetDao(tweetDao -> tweetDao.update(tweetDto));
     }
 
-    public List<TweetDto> search(SearchTweetQuery searchTweetQuery){
+    public List<TweetDto> search(SearchTweetQuery searchTweetQuery) {
         return daos().withTweetDao(tweetDao -> tweetDao.search(searchTweetQuery));
     }
 }

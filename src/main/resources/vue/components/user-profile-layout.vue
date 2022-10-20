@@ -1,6 +1,6 @@
 <template id="user-profile-layout">
   <app-layout>
-    <v-container fluid>
+    <v-container fluid style="height: 1000px">
       <v-row dense class="d-flex align-center justify-center" align-content="center">
         <side-navigation :menu-links="menuLinks">
           <template #default="props" >
@@ -35,7 +35,7 @@ Vue.component("user-profile-layout", {
         component: 'user-info',
       },
       {
-        text: 'My Friends',
+        text: 'Friends',
         icon: 'mdi-tractor-variant',
         path: `/users/${this.userid}/friends`,
         component: 'my-friends'
