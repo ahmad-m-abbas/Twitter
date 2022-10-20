@@ -1,1 +1,1 @@
-INSERT INTO friends VALUES (:firstUser,:secondUser);
+INSERT INTO friends VALUES (:firstUser,:secondUser), (:secondUser,:firstUser);

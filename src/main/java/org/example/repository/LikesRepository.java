@@ -32,4 +32,7 @@ public class LikesRepository {
     public void addLike(LikesDto likesDto){
         daos().useLikesDao(likesDao -> likesDao.insert(likesDto));
     }
+    public void unlike(LikesDto likesDto){
+        daos().useLikesDao(likesDao -> likesDao.unlike(likesDto));
+    }
 }

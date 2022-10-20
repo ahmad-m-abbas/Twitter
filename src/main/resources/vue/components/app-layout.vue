@@ -1,7 +1,13 @@
-<template id="app-layout">
+<template id="app-layout" >
   <v-app>
+    <topbar @change="change()" :name="name">
+      <template v-slot:appbar-extension>
+        <slot name="appbar">
+        </slot>
+      </template>
+    </topbar>
     <v-row dense no-gutters class="flex-grow-0 primary">
-      <v-col cols="1" align-self="center" class="justify-center">
+      <v-col cols="1" sm="4" align-self="center" class="justify-center">
         <v-hover v-if="!user" v-slot:default="{ hover }">
           <a href="/login" target="_blank" class="ml-4 white--text text-decoration-none"
              :class="{'text-decoration-underline': hover}">LOGIN</a>
@@ -21,7 +27,7 @@
                 v-ripple="false"
                 class="white--text user-menu-button"
             >
-              USERNAME
+              {{user.data.name}}
               <v-icon color="white">mdi-chevron-down</v-icon>
             </v-btn>
           </template>
@@ -43,7 +49,7 @@
                 <v-list-item-content>
 
                   <v-list-item-title class="white--text">
-                    <a :href=`/api/user/${user.id}/profile` class="white--text text-decoration-none">Profile</a>
+                    <a :href=`/users/${$javalin.state.userDetails.user_id}/profile` class="white--text text-decoration-none">Profile</a>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list>
@@ -62,7 +68,7 @@
 
         </v-menu>
       </v-col>
-      <v-col cols="10" align-self="center" class="mr-1 d-flex justify-around">
+      <v-col cols="1" sm="4" align-self="center" class="mr-12 d-flex justify-around">
         <v-tabs
             v-model="tab"
             @change="handleChange"
@@ -70,20 +76,27 @@
             color="#e49617"
             centered
             dark
-            height="56px"
+            height="100%"
         >
           <v-tab exact exact-path href="/" class="tab-navigation">
             HOMEPAGE
           </v-tab>
-          <v-tab exact exact-path href="/api/user" class="tab-navigation">
-            NOTIFICATIONS
-          </v-tab>
         </v-tabs>
       </v-col>
+      <v-col  cols="1" sm="3"  class="ml-12 d-flex justify-end" style="height: 100%;">
+          <search-bar
+          @add="add"
+          @view="view"
+          >
+          </search-bar>
+      </v-col>
     </v-row>
-    <v-main max-width="900px">
-      <div class="d-flex justify-center align-baseline fill-height">
-        <slot></slot>
+    <v-row class="d-flex justify-center">
+      <h1 class="main-title" >Twitter</h1>
+    </v-row>
+    <v-main width="900px" >
+      <div  class="d-flex justify-center align-baseline fill-height">
+        <slot ></slot>
       </div>
     </v-main>
   </v-app>
@@ -92,19 +105,40 @@
 <script>
 Vue.component("app-layout", {
   template: "#app-layout",
+  props: ["name"],
   data() {
     return {
       tab: null,
-      user: null
+      user: null,
+      drawer: false
     }
   },
   created() {
     this.tab = sessionStorage.getItem('twitter-main-navigation-selected-tab');
-    this.user = new LoadableData(`/api/user/${this.$javalin.state.userDetails.user_id}`).data
+    this.user = new LoadableData(`/api/user/${this.$javalin.state.userDetails.user_id}`);
   },
   methods: {
     handleChange(index) {
       sessionStorage.setItem('twitter-main-navigation-selected-tab', index);
+    },
+
+    change: function () {
+      this.drawer = !this.drawer
+    },
+    view(id){
+      window.location=`/users/${id}/profile`;
+    },
+    add(id){
+
+      fetch(`/api/friends/`, {
+        method: "post", 'Content-Type': 'application/json',
+        body: JSON.stringify({
+          "firstUser": id,
+          "secondUser": this.$javalin.state.userDetails.user_id
+        })
+      }).then(
+          this.MyFriends.refresh()
+      );
     }
   }
 });
@@ -127,5 +161,7 @@ Vue.component("app-layout", {
 .v-tab {
   text-transform: none !important;
 }
-
+*p{
+  color: black;
+}
 </style>

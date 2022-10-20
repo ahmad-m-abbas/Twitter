@@ -1,0 +1,14 @@
+group FriendsDao;
+
+search(userId,query) ::= <<
+SELECT u.*
+FROM `user` u
+JOIN `friends` f ON u.id = f.firstUser
+WHERE
+    f.secondUser='<userId>' and u.name like "<query.name>%"
+<if(query.orderBy)>
+    <if(query.order)>
+    ORDER BY `<query.orderBy>` <query.order>
+    <endif>
+<endif>
+>>

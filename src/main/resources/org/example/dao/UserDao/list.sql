@@ -1,2 +1,2 @@
 SELECT *
-FROM `user`
+FROM `user` where user.name like :name;

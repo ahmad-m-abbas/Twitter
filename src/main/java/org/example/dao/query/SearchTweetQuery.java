@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class SearchTweetQuery {
+    private final String name;
     private final String toBeIn;
 
     private final String orderBy;

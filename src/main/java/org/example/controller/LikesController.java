@@ -17,4 +17,7 @@ public class LikesController {
     public static void add(Context ctx ){
         likeService.add(ctx.bodyAsClass(LikesDto.class));
     }
+    public static void unlike(Context ctx ){
+        likeService.unlike(ctx.bodyAsClass(LikesDto.class));
+    }
 }

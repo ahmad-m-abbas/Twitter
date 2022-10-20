@@ -3,6 +3,7 @@ package org.example.dao;
 import org.example.dao.query.SearchTweetQuery;
 import org.example.dto.TweetDto;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.AllowUnusedBindings;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.customizer.Define;
@@ -29,8 +30,7 @@ public interface TweetDao {
 
     @SqlUpdate
     @UseClasspathSqlLocator
-    @GetGeneratedKeys
-    long insert(@BindBean TweetDto tweetDto);
+    void insert(@BindBean TweetDto tweetDto);
 
     @SqlUpdate
     @UseClasspathSqlLocator
@@ -43,7 +43,8 @@ public interface TweetDao {
     @SqlQuery
     @UseStringTemplateSqlLocator
     @RegisterBeanMapper(TweetDto.class)
-    List<TweetDto> search(String name ,@Define("query") SearchTweetQuery query);
+    @AllowUnusedBindings
+    List<TweetDto> search(@Define("query") SearchTweetQuery query);
 
 
 }

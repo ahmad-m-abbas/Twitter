@@ -28,8 +28,8 @@ public class TweetService {
     public TweetDto getTweet(String id){
         return tweetRepository.getTweet(id);
     }
-    public long insert(TweetDto tweetDto){
-        return tweetRepository.insert(tweetDto);
+    public void insert(TweetDto tweetDto){
+        tweetRepository.insert(tweetDto);
     }
     public void delete(String id){
         tweetRepository.delete(id);
@@ -37,7 +37,7 @@ public class TweetService {
     public void update(String id,TweetDto tweetDto){
         tweetRepository.update(id,tweetDto);
     }
-    public List<TweetDto> search(String name , SearchTweetQuery searchTweetQuery){
-        return tweetRepository.search(name,searchTweetQuery);
+    public List<TweetDto> search(SearchTweetQuery searchTweetQuery){
+        return tweetRepository.search(searchTweetQuery);
     }
 }

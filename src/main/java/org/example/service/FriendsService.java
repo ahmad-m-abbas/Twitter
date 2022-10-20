@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.dao.query.SearchFriendQuery;
 import org.example.dto.FriendsDto;
 import org.example.dto.TweetDto;
 import org.example.dto.UserDto;
@@ -33,8 +34,14 @@ public class FriendsService {
     public List<UserDto> getFriends(String userId){
         return friendsRepository.getFriends(userId);
     }
+    public List<UserDto> search(String userId,SearchFriendQuery searchFriendQuery){
+        return friendsRepository.search(userId,searchFriendQuery);
+    }
 
     public void addFriends(FriendsDto friendsDto){
         friendsRepository.addFriends(friendsDto);
+    }
+    public void delete(FriendsDto friendsDto){
+        friendsRepository.delete(friendsDto);
     }
 }

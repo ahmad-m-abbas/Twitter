@@ -1,10 +1,21 @@
 <template id="home">
-  <app-layout>
-    <v-overlay absolute class="main-content" color="#000000" opacity="0.5">
-      <v-container class="main-content-container">
-        <h1 class="main-title">Twitter</h1>
+  <app-layout >
+
+    <v-container absolute  class="main-content" color="#87CEFA" opacity="0.5" >
+      <v-container class="main-content-container" >
+        <tweet-post v-for="tweet in tweets" class=""
+        :id="tweet.hasOwnProperty('id') ? tweet.id : ''"
+        :name="new LoadableData(`/api/user/`+tweet.userId).data.name"
+        :text="tweet.hasOwnProperty('text') ? tweet.text : ''"
+        :date="tweet.hasOwnProperty('created_on') ? new Date(tweet.created_on) : ''"
+
+        >
+        </tweet-post>
+        <h1>
+          {{tweets}}
+        </h1>
       </v-container>
-    </v-overlay>
+    </v-container>
   </app-layout>
 </template>
 <script>
@@ -12,18 +23,28 @@ Vue.component("home", {
   template: "#home",
   data() {
     return {
-      searchQuery: '',
+      tweets: [],
+      likedTweets:[]
     }
+  },
+  created(){
+    this.tweets=new LoadableData(`/api/friends/${this.$javalin.state.userDetails.user_id}/tweets`).data;
+    this.likedTweets=new LoadableData(`/api/user/${this.$javalin.state.userDetails.user_id}/likes`).data;
+  },
+  methods:{
+
   }
 });
 </script>
 
 <style scoped>
 .main-content {
+   height: 1000px;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+
 }
 
 .main-title {
@@ -46,7 +67,9 @@ Vue.component("home", {
 }
 
 .main-content-container {
-  max-width: 600px;
+  max-width: 40%;
+  max-height: 100%;
+
 }
 
 .popular-text {
@@ -67,7 +90,7 @@ Vue.component("home", {
 }
 
 .most-popular {
-  color: #FFFFFF !important;
+  color: #102338 !important;
 }
 
 </style>

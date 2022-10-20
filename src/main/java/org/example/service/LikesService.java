@@ -32,4 +32,7 @@ public class LikesService {
     public void add(LikesDto likesDto){
         likesRepository.addLike(likesDto);
     }
+    public void unlike(LikesDto likesDto){
+        likesRepository.unlike(likesDto);
+    }
 }

@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.dao.query.SearchFriendQuery;
 import org.example.dto.FriendsDto;
 import org.example.dto.TweetDto;
 import org.example.dto.UserDto;
@@ -30,8 +31,14 @@ public class FriendsRepository {
     public List<UserDto> getFriends(String userId){
         return daos().withFriendsDao(friendsDao -> friendsDao.getFriends(userId));
     }
+    public List<UserDto> search(String userId,SearchFriendQuery searchFriendQuery){
+        return daos().withFriendsDao(friendsDao -> friendsDao.search(userId,searchFriendQuery));
+    }
 
     public void addFriends( FriendsDto friendsDto){
         daos().useFriendsDao(friendsDao -> friendsDao.addFriends(friendsDto));
+    }
+    public void delete( FriendsDto friendsDto){
+        daos().useFriendsDao(friendsDao -> friendsDao.delete(friendsDto));
     }
 }

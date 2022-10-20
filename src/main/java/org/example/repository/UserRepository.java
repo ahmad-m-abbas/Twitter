@@ -40,7 +40,10 @@ public class UserRepository {
     }
 
 
-    public List<UserDto> list() {
-        return daos().withUserDao(UserDao::list);
+    public List<UserDto> list(String name) {
+        return daos().withUserDao(userDao -> userDao.list(name));
+    }
+    public List<UserDto> getUserByName(String name) {
+        return daos().withUserDao(userDao -> userDao.getUserByName(name));
     }
 }

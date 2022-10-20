@@ -9,9 +9,8 @@ public class UserController {
     private static final UserService userService = UserService.instance();
 
     public static void listUsers(Context ctx) {
-        ctx.json(userService.listUsers());
+        ctx.json(userService.listUsers(ctx.queryParamAsClass("name",String.class).getOrDefault("")));
     }
-
     public static void getUserById(Context ctx) {
         UserDto userDto = userService.findUser(ctx.pathParam("userId"));
         if (userDto == null) {
@@ -33,6 +32,7 @@ public class UserController {
     }
 
     public static void getUserTweets(Context ctx){
+        System.out.println(userService.getUserTweets(ctx.pathParam("userId")));
         ctx.json(userService.getUserTweets(ctx.pathParam("userId")));
     }
 }

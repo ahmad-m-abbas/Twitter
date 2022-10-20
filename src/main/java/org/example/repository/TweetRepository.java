@@ -29,8 +29,8 @@ public class TweetRepository {
         return daos().withTweetDao((tweetDao) -> tweetDao.getTweet(id));
     }
 
-    public long insert(TweetDto tweetDto){
-        return daos().withTweetDao((tweetDao -> tweetDao.insert(tweetDto)));
+    public void insert(TweetDto tweetDto){
+        daos().useTweetDao((tweetDao -> tweetDao.insert(tweetDto)));
     }
 
     public void delete(String id){
@@ -41,7 +41,7 @@ public class TweetRepository {
         daos().useTweetDao(tweetDao -> tweetDao.update(id, tweetDto));
     }
 
-    public List<TweetDto> search(String name ,SearchTweetQuery searchTweetQuery){
-        return daos().withTweetDao(tweetDao -> tweetDao.search(name , searchTweetQuery));
+    public List<TweetDto> search(SearchTweetQuery searchTweetQuery){
+        return daos().withTweetDao(tweetDao -> tweetDao.search(searchTweetQuery));
     }
 }

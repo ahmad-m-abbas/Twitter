@@ -1,0 +1,6 @@
+group UserDao;
+
+list(userName) ::=<<
+SELECT *
+FROM `user` where user.name like "<userName>%";
+>>

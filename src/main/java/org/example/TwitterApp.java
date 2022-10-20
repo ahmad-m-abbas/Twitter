@@ -73,7 +73,7 @@ public class TwitterApp implements App{
                     if (UserService.instance().findUser(jwsClaims.getSubject()) == null) {
                         UserService.instance().addUser(userDto);
                     }
-                    UserService.instance().updateUser(jwsClaims.getSubject(), userDto);
+//                    UserService.instance().updateUser(jwsClaims.getSubject(), userDto);
                 });
             });
             config.accessManager(instance);

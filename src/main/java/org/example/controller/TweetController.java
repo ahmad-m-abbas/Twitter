@@ -40,10 +40,12 @@ public class TweetController {
     }
     public static void search(Context ctx){
         SearchTweetQuery query = new SearchTweetQuery(
+                ctx.pathParam("name"),
                 ctx.queryParamAsClass("toBeIn",String.class).getOrDefault(null),
                 ctx.queryParamAsClass("orderBy",String.class).getOrDefault(null)
         );
         String name = ctx.pathParam("name");
-        ctx.json(tweetService.search(name,query));
+        System.out.println(name);
+        ctx.json(tweetService.search(query));
     }
 }

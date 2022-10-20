@@ -30,8 +30,11 @@ public class UserService {
         return userRepository.get(userId);
     }
 
-    public List<UserDto> listUsers() {
-        return userRepository.list();
+    public List<UserDto> listUsers(String name) {
+        return userRepository.list(name );
+    }
+    public List<UserDto> getUserByName(String name) {
+        return userRepository.getUserByName(name);
     }
 
     public long addUser(UserDto userDto) {

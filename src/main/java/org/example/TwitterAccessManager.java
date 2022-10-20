@@ -18,7 +18,6 @@ public class TwitterAccessManager implements AccessManager {
 
     @Override
     public void manage(@NotNull Handler handler, @NotNull Context ctx, @NotNull Set<RouteRole> routeRoles) throws Exception {
-
         String accessToken = ctx.sessionAttribute("accessToken");
         String idToken = ctx.sessionAttribute("idToken");
         if (StringUtils.isEmpty(ctx.header(HttpHeader.AUTHORIZATION.asString()))) {
@@ -28,7 +27,6 @@ public class TwitterAccessManager implements AccessManager {
                 }
             }
         }
-
         handler.handle(ctx);
     }
 }
