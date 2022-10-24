@@ -1,7 +1,7 @@
 package org.example.service;
 
-import exceptions.TweetNotFoundException;
-import exceptions.UserNotFoundException;
+import org.example.exceptions.TweetNotFoundException;
+import org.example.exceptions.UserNotFoundException;
 import org.example.dto.LikesDto;
 import org.example.dto.TweetDto;
 import org.example.dto.UserDto;
@@ -9,8 +9,6 @@ import org.example.repository.LikesRepository;
 
 
 import java.util.List;
-
-import static org.example.provider.DaoProvider.daos;
 
 public class LikesService {
     private static LikesService instance = null;

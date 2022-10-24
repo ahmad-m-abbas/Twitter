@@ -1,6 +1,6 @@
 package org.example;
 
-import exceptions.UsedEmailException;
+import org.example.exceptions.UsedEmailException;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.plugin.json.JavalinJackson;
@@ -16,11 +16,9 @@ import org.example.service.UserService;
 import org.flywaydb.core.Flyway;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static auth.infra.Auth0Plugin.useAuth0Plugin;
-import static java.rmi.server.LogStream.log;
+import static org.example.infra.Auth0Plugin.useAuth0Plugin;
 
 
 public class TwitterApp implements App {
