@@ -1,5 +1,6 @@
 package org.example;
 
+import lombok.extern.java.Log;
 import org.example.exceptions.UsedEmailException;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
@@ -11,6 +12,8 @@ import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.example.dto.UserDto;
+import org.example.infra.App;
+import org.example.provider.AccessManagerProvider;
 import org.example.provider.JdbiProvider;
 import org.example.service.UserService;
 import org.flywaydb.core.Flyway;
@@ -20,19 +23,16 @@ import java.util.Map;
 
 import static org.example.infra.Auth0Plugin.useAuth0Plugin;
 
-
+@Log
 public class TwitterApp implements App {
     Javalin javalin;
-    TwitterAccessManager instance = null;
-
     public TwitterApp() {
-        instance = new TwitterAccessManager();
+        AccessManagerProvider.instance().accessManager(new TwitterAccessManager());
     }
 
     @Override
     public void init() {
         init(8080);
-
     }
 
     public void JavalinConfig(int port) {
@@ -77,10 +77,8 @@ public class TwitterApp implements App {
                             throw new RuntimeException(e);
                         }
                     }
-//                    UserService.instance().updateUser(jwsClaims.getSubject(), userDto);
                 });
             });
-            config.accessManager(instance);
         });
 
         this.javalin.exception(Exception.class, (ex, ctx) -> {

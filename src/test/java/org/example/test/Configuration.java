@@ -1,4 +1,4 @@
-package org.example;
+package org.example.test;
 
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -33,7 +33,7 @@ public class Configuration {
                 try {
                     instance = om.readValue(file, Configuration.class);
                 } catch (IOException ex) {
-                    Logger.getLogger(org.example.Configuration.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 instance = new Configuration();

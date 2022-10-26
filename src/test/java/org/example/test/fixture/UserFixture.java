@@ -1,4 +1,4 @@
-package org.example.fixture;
+package org.example.test.fixture;
 
 import org.example.dto.UserDto;
 import org.example.exceptions.UsedEmailException;

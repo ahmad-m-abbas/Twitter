@@ -1,21 +1,25 @@
 package org.example.service;
 
+import org.example.dao.TweetDao;
+import org.example.dto.LikesDto;
 import org.example.exceptions.TextOverflowException;
+import org.example.exceptions.TweetNotFoundException;
 import org.example.exceptions.UserNotFoundException;
 import org.example.dao.query.SearchTweetQuery;
 import org.example.dto.TweetDto;
 import org.example.dto.UserDto;
-import org.example.repository.TweetRepository;
 
 import java.util.List;
+
+import static org.example.provider.DaoProvider.daos;
 
 public class TweetService {
 
     private static TweetService instance = null;
-    private final TweetRepository tweetRepository;
 
     private TweetService() {
-        tweetRepository = TweetRepository.instance();
+
+
     }
 
     public static TweetService instance() {
@@ -27,11 +31,10 @@ public class TweetService {
     }
 
     public List<TweetDto> list() {
-        return tweetRepository.list();
+        return daos().withTweetDao(TweetDao::list);
     }
-
     public TweetDto getTweet(String id) {
-        return tweetRepository.getTweet(id);
+        return daos().withTweetDao((tweetDao) -> tweetDao.getTweet(id));
     }
 
     public void insert(TweetDto tweetDto) throws UserNotFoundException, TextOverflowException {
@@ -44,7 +47,7 @@ public class TweetService {
         if (tweetDto.getText().length() > 280) {
             throw new TextOverflowException("");
         }
-        tweetRepository.insert(tweetDto);
+        daos().useTweetDao((tweetDao -> tweetDao.insert(tweetDto)));
     }
 
     public void delete(String id) throws UserNotFoundException, TextOverflowException {
@@ -53,17 +56,37 @@ public class TweetService {
             throw new UserNotFoundException(id);
         }
 
-        tweetRepository.delete(id);
+        daos().useTweetDao(tweetDao -> tweetDao.delete(id));
     }
 
     public void update(TweetDto tweetDto) throws TextOverflowException {
         if (tweetDto.getText().length() > 280) {
             throw new TextOverflowException("");
         }
-        tweetRepository.update(tweetDto);
+        daos().useTweetDao(tweetDao -> tweetDao.update(tweetDto));
     }
 
     public List<TweetDto> search(SearchTweetQuery searchTweetQuery) {
-        return tweetRepository.search(searchTweetQuery);
+        return daos().withTweetDao(tweetDao -> tweetDao.search(searchTweetQuery));
     }
+
+    public List<TweetDto> getTweetsLikedByUser(String userId) {
+        return daos().withLikesDao(likesDao -> likesDao.getTweets(userId));
+    }
+    public void addLike(LikesDto likesDto) throws UserNotFoundException, TweetNotFoundException {
+        UserDto userDto = UserService.instance().findUser(likesDto.getUserId());
+        TweetDto tweetDto = TweetService.instance().getTweet(likesDto.getTweetId());
+        if (userDto == null) {
+            throw new UserNotFoundException(likesDto.getUserId());
+        }
+        if (tweetDto == null) {
+            throw new TweetNotFoundException(likesDto.getTweetId());
+        }
+        daos().useLikesDao(likesDao -> likesDao.insert(likesDto));
+    }
+
+    public void unlike(LikesDto likesDto) {
+        daos().useLikesDao(likesDao -> likesDao.unlike(likesDto));
+    }
+
 }

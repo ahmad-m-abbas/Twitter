@@ -3,7 +3,7 @@ group TweetDao;
 search(query) ::= <<
 select t.*
 from tweet t, user u
-where u.name="<query.name>"
+where u.name like "<query.name>%"
 <if(query.toBeIn)>
  and t.text like "%<query.toBeIn>%"
 <endif>

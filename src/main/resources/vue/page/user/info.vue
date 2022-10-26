@@ -90,15 +90,11 @@ Vue.component("user-info", {
     },
     user:{},
     friends: {},
-    tweets: {},
-    likes: {}
   }),
   created() {
     this.id = this.$javalin.pathParams["userId"];
     this.user = new LoadableData(`/api/user/${this.id}`).data;
-    this.friends = new LoadableData(`/api/friends/${this.id}`).data;
-    this.tweets = new LoadableData(`/api/user/${this.id}/tweets`).data;
-    this.likes = new LoadableData(`/api/user/${this.id}/likes`).data;
+    this.friends = new LoadableData(`/api/user/${this.id}/friends`).data;
     this.userItem.name = this.user.hasOwnProperty('name') ? this.user.name : "";
     this.userItem.email = this.user.hasOwnProperty('email') ? this.user.email : null;
 
@@ -111,7 +107,7 @@ Vue.component("user-info", {
     },
     add(id){
 
-      fetch(`/api/friends/`, {
+      fetch(`/api/user/friends/`, {
         method: "post", 'Content-Type': 'application/json',
         body: JSON.stringify({
           "firstUser": id,

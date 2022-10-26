@@ -90,7 +90,7 @@ Vue.component("user-tweets", {
     },
     unfriend(id){
 
-      fetch(`/api/friends/`, {
+      fetch(`/api/user/friends/`, {
         method: "delete", 'Content-Type': 'application/json',
         body: JSON.stringify({
           "firstUser": id,

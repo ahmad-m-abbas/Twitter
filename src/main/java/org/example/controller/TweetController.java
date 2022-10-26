@@ -2,10 +2,9 @@ package org.example.controller;
 
 import io.javalin.http.Context;
 import org.example.dao.query.SearchTweetQuery;
+import org.example.dto.LikesDto;
 import org.example.dto.TweetDto;
-import org.example.dto.UserDto;
 import org.example.service.TweetService;
-import org.example.service.UserService;
 
 public class TweetController {
 
@@ -53,10 +52,30 @@ public class TweetController {
 
     public static void search(Context ctx) {
         SearchTweetQuery query = new SearchTweetQuery(
-                ctx.pathParam("name"),
+                ctx.queryParamAsClass("name", String.class).getOrDefault(null),
                 ctx.queryParamAsClass("toBeIn", String.class).getOrDefault(null),
                 ctx.queryParamAsClass("orderBy", String.class).getOrDefault(null)
         );
         ctx.json(tweetService.search(query));
+    }
+
+    public static void getTweetsLikedByUser(Context ctx) {
+        ctx.json(tweetService.getTweetsLikedByUser(ctx.pathParam("userId")));
+    }
+
+    public static void addLike(Context ctx) {
+        try {
+            tweetService.addLike(ctx.bodyAsClass(LikesDto.class));
+        } catch (Exception e) {
+            ctx.json(e).status(400);
+        }
+    }
+
+    public static void unlike(Context ctx) {
+        try {
+            tweetService.unlike(ctx.bodyAsClass(LikesDto.class));
+        } catch (Exception e) {
+            ctx.json(e).status(400);
+        }
     }
 }
