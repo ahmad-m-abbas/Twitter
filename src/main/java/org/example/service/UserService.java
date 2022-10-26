@@ -1,14 +1,12 @@
 package org.example.service;
 
 
-import exceptions.UsedEmailException;
-import io.sentry.event.User;
+import org.example.exceptions.UsedEmailException;
 import org.example.dto.TweetDto;
 import org.example.dto.UserDto;
 import org.example.repository.UserRepository;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class UserService {

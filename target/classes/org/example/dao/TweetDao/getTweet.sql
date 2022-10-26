@@ -1,1 +1,0 @@
-SELECT * FROM tweet WHERE id=:id;

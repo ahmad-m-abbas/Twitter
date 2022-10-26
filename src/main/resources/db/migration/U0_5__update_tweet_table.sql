@@ -1,2 +1,0 @@
-ALTER TABLE `tweet`
-MODIFY COLUMN `id` SERIAL;

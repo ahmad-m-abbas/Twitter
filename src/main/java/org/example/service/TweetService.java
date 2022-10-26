@@ -1,7 +1,7 @@
 package org.example.service;
 
-import exceptions.TextOverflowException;
-import exceptions.UserNotFoundException;
+import org.example.exceptions.TextOverflowException;
+import org.example.exceptions.UserNotFoundException;
 import org.example.dao.query.SearchTweetQuery;
 import org.example.dto.TweetDto;
 import org.example.dto.UserDto;
