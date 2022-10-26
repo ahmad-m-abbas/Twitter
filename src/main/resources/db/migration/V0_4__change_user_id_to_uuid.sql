@@ -10,7 +10,3 @@ ALTER TABLE `tweet`
 ALTER TABLE `likes`
     MODIFY COLUMN `user_id` VARCHAR(36),
     ADD FOREIGN KEY fk_likes_user_id (`user_id`) REFERENCES `user` (`id`);
-ALTER TABLE `likes`
-    DROP FOREIGN KEY likes_ibfk_1;
-ALTER TABLE `likes`
-    ADD FOREIGN KEY fk_likes_user_id (`tweet_id`) REFERENCES `tweet` (`id`);

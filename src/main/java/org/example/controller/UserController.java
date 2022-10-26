@@ -1,6 +1,8 @@
 package org.example.controller;
 
 import io.javalin.http.Context;
+import org.example.dao.query.SearchFriendQuery;
+import org.example.dto.FriendsDto;
 import org.example.dto.UserDto;
 import org.example.service.UserService;
 
@@ -42,5 +44,44 @@ public class UserController {
 
     public static void getUserTweets(Context ctx) {
         ctx.json(userService.getUserTweets(ctx.pathParam("userId")));
+    }
+
+
+    public static void addFriends(Context ctx) {
+        try {
+            userService.addFriends(ctx.bodyAsClass(FriendsDto.class));
+            ctx.status(200);
+        } catch (Exception e) {
+            ctx.json(e).status(400);
+        }
+    }
+
+    public static void delete(Context ctx) {
+        try {
+            userService.delete(ctx.bodyAsClass(FriendsDto.class));
+            ctx.status(200);
+        } catch (Exception e) {
+            ctx.json(e).status(400);
+        }
+    }
+
+    public static void getFriendsTweets(Context ctx) {
+        ctx.json(userService.getFriendsTweets(ctx.pathParam("userId")));
+    }
+
+    public static void getFriends(Context ctx) {
+        ctx.json(userService.getFriends(ctx.pathParam("userId")));
+    }
+
+    public static void search(Context ctx) {
+        SearchFriendQuery searchFriendQuery = new SearchFriendQuery(
+                ctx.queryParamAsClass("name", String.class).getOrDefault(""),
+                ctx.queryParamAsClass("orderBy", String.class).getOrDefault(null),
+                ctx.queryParamAsClass("order", String.class).getOrDefault(null)
+        );
+        ctx.json(userService.search(ctx.pathParam("userId"), searchFriendQuery));
+    }
+    public static void getUsersLikedTweet(Context ctx) {
+        ctx.json(userService.getUsersLikedTweet(ctx.pathParam("tweetId")));
     }
 }

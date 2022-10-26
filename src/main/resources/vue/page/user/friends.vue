@@ -94,13 +94,13 @@ Vue.component("user-friends", {
   },
   created() {
     this.id= this.$javalin.pathParams["userId"];
-    this.MyFriends = new LoadableData(`/api/friends/${this.id}`);
+    this.MyFriends = new LoadableData(`/api/user/${this.id}/friends`);
   }, methods: {
     forceRerender() {
       this.componentKey += 1;
     },
     ClearFields() {
-      this.MyFriends = new LoadableData(`/api/friends/${this.id}`);
+      this.MyFriends = new LoadableData(`/api/user/${this.id}/friends`);
     },
     filterMyFriends() {
       let query = []
@@ -113,11 +113,11 @@ Vue.component("user-friends", {
         query.push(`order=${this.sortingCriteria.order}`)
       }
 
-      this.MyFriends = new LoadableData(`/api/friends/${this.id}/search?${query.join('&')}`);
+      this.MyFriends = new LoadableData(`/api/user/${this.id}/friends/search?${query.join('&')}`);
     },
     unfriend(id){
 
-      fetch(`/api/friends/`, {
+      fetch(`/api/user/friends/`, {
         method: "delete", 'Content-Type': 'application/json',
         body: JSON.stringify({
           "firstUser": id,
@@ -125,7 +125,6 @@ Vue.component("user-friends", {
         })
       }).then(
           this.ClearFields()
-          // this.MyFriends.refresh()
     );
     }
   }

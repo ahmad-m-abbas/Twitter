@@ -12,6 +12,9 @@ public class SearchTweetQuery {
     private final String orderBy;
 
     public String getOrderBy() {
+        if(orderBy==null){
+            return null;
+        }
         switch (orderBy) {
             case "name":
             case "Date":

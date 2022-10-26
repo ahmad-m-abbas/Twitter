@@ -95,7 +95,7 @@ Vue.component("tweet-post", {
     },
     addLike(id) {
       if (this.liked) {
-        fetch(`/api/user/` + this.$javalin.state.userDetails.user_id + `/like`, {
+        fetch(`/api/tweet/unlike`, {
           method: "delete", 'Content-Type': 'application/json',
           body: JSON.stringify({
             "tweetId": this.id,
@@ -103,7 +103,7 @@ Vue.component("tweet-post", {
           })
         });
       } else {
-        fetch(`/api/user/` + this.$javalin.state.userDetails.user_id + `/like`, {
+        fetch(`/api/tweet/like`, {
           method: "post", 'Content-Type': 'application/json',
           body: JSON.stringify({
             "tweetId": this.id,

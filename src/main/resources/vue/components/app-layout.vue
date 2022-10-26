@@ -49,7 +49,7 @@
                 <v-list-item-content>
 
                   <v-list-item-title class="white--text">
-                    <a :href=`/users/${$javalin.state.userDetails.user_id}/profile`
+                    <a :href=`/users/${$javalin.state.userDetails.user_id}`
                        class="white--text text-decoration-none">Profile</a>
                   </v-list-item-title>
                 </v-list-item-content>
@@ -126,11 +126,11 @@ Vue.component("app-layout", {
       this.drawer = !this.drawer
     },
     view(id) {
-      window.location = `/users/${id}/profile`;
+      window.location = `/users/${id}`;
     },
     add(id) {
 
-      fetch(`/api/friends/`, {
+      fetch(`/api/user/friends/`, {
         method: "post", 'Content-Type': 'application/json',
         body: JSON.stringify({
           "firstUser": id,

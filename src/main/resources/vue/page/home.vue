@@ -40,7 +40,7 @@ Vue.component("home", {
     }
   },
   created(){
-    this.tweets=new LoadableData(`/api/friends/${this.$javalin.state.userDetails.user_id}/tweets`).data;
+    this.tweets=new LoadableData(`/api/user/${this.$javalin.state.userDetails.user_id}/friends/tweets`).data;
     this.likedTweets=new LoadableData(`/api/user/${this.$javalin.state.userDetails.user_id}/likes`).data;
   },
   methods:{

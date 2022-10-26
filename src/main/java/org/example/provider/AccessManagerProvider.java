@@ -1,4 +1,4 @@
-package org.example;
+package org.example.provider;
 
 import io.javalin.core.security.AccessManager;
 
